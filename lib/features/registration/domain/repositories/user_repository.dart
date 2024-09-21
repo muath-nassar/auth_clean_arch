@@ -13,6 +13,9 @@ abstract class UserRepository{
   Future<Either<Failure,User>> createUser(UserCreateParams newUser);
   //UPDATE methods
   Future<Either<Failure,User>> updateUser(User updatedUser);
+  /// 0 means no Current user. otherwise it is the current user id.
+  /// For sign out please call with 0.
+  Future<Either<Failure, int>> cacheCurrentUser(int id);
   // DELETE methods
   Future<Either<Failure,User>> deleteUser(int userId);
 }
