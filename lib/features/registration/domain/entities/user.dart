@@ -1,22 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class BaseUser extends Equatable{
-  final int id;
-  final String email;
-  final String firstName;
-  final String lastName;
-
-  const BaseUser({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-
-});
-
-  @override
-  List<Object?> get props => [id, email, firstName, lastName];
-}
+import '../../../../core/entities/base_user.dart';
 
 /// User Entity is the entity that you can get from the database with all fields
 /// including the encrypted password. Also, it is the user entity that you can
@@ -42,20 +26,6 @@ class User extends BaseUser{
 
 }
 
-/// UserCreateDTO class is used to get the data needed to create a new user.
-class UserCreateDTO extends BaseUser{
-  final String password;
-
-  const UserCreateDTO({
-    required super.id,
-    required super.email,
-    required super.firstName,
-    required super.lastName,
-    required this.password,
-  });
-  @override
-  List<Object?> get props => super.props + [password];
-}
 
 /// This class is related to the data will be taken from the database for
 /// the provided email and password.

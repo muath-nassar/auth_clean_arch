@@ -7,6 +7,6 @@ sealed class Failure extends Equatable{
   List<Object?> get props => errors;
 }
 
-class EmailExistsFailure extends Failure{
-  const EmailExistsFailure(super.errors);
+class UserCreateFailure extends Failure{
+  const UserCreateFailure(super.errors);
 }
