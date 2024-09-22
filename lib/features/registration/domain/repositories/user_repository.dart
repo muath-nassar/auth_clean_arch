@@ -9,6 +9,7 @@ abstract class UserRepository{
   Future<Either<Failure,User>> getUserByEmail(String email);
   Future<Either<Failure,User>> getUserById(int id);
   Future<Either<Failure,UserLoginCredentials>> getUserAuthCredentials(String email);
+  Future<Either<Failure, int>> getCurrentUserId();
   //POST methods
   Future<Either<Failure,User>> createUser(UserCreateParams newUser);
   //UPDATE methods

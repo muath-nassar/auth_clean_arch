@@ -26,3 +26,10 @@ class EmailNotVerifiedFailure extends Failure{
 class CacheFailure extends Failure {
   const CacheFailure(super.errors);
 }
+
+class DatabaseReadFailure extends Failure{
+  const DatabaseReadFailure(super.errors);
+}
+class DatabaseWriteFailure extends Failure{
+  const DatabaseWriteFailure(super.errors);
+}
