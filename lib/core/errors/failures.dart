@@ -33,3 +33,14 @@ class DatabaseReadFailure extends Failure{
 class DatabaseWriteFailure extends Failure{
   const DatabaseWriteFailure(super.errors);
 }
+
+class EmailFailure extends Failure{
+  const EmailFailure(super.errors);
+}
+
+class VerificationCodeFailure extends Failure{
+  const VerificationCodeFailure(super.errors);
+
+}
+
+

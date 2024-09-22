@@ -57,6 +57,9 @@ dependencies:
   # Encryption
   bcrypt: ^1.1.3
 
+  # For Emails
+  mailer: ^6.1.2
+
 
 dev_dependencies:
   flutter_test:
