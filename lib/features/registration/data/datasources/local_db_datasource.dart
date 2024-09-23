@@ -1,6 +1,7 @@
 import 'package:auth_clean_arch/core/database/database.dart';
 import 'package:auth_clean_arch/core/errors/exceptions.dart';
 import 'package:auth_clean_arch/features/registration/data/models/user_create_model.dart';
+import 'package:auth_clean_arch/features/registration/data/models/user_login_credentials_model.dart';
 
 import '../models/user_model.dart';
 
@@ -11,7 +12,10 @@ abstract class UserModelLocalDbDatasource{
   Future<UserModel> getUserById(int id);
 
   /// throws [UserNotFoundException]
-  Future<UserModel> getUserByEmail(String email);
+  Future<UserModel> getUserByEmail(String email); 
+  
+  /// throws [UserNotFoundException]
+  Future<UserLoginCredentialsModel> getLoginCredentials(String email);
 
   Future<bool> setEmailVerification(int id, bool verified);
 
@@ -73,6 +77,13 @@ class UserModelLocalDbDatasourceImpl extends UserModelLocalDbDatasource{
   @override
   Future<bool> updateUser(UserModel userModel) async{
     return await db.updateUser(userModel.toDB());
+  }
+
+  @override
+  Future<UserLoginCredentialsModel> getLoginCredentials(String email) async{
+    var user = await db.getUserByEmail(email);
+    if (user == null) throw UserNotFoundException();
+    return UserLoginCredentialsModel.fromDB(user);
   }
 
 
