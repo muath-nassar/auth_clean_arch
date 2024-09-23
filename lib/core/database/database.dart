@@ -16,7 +16,7 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  Future<User> getUser(int id) => (select(users)..where((u) => u.id.equals(id))).getSingle();
+  Future<User?> getUser(int id) => (select(users)..where((u) => u.id.equals(id))).getSingleOrNull();
 
   Future<int> insertUser(UsersCompanion user) => into(users).insert(user);
 
