@@ -4,14 +4,23 @@ import 'package:auth_clean_arch/features/registration/domain/repositories/user_r
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/utils/encryption.dart';
 import '../entities/user.dart';
 
 class SignUpUseCase extends UseCase<User,UserCreateParams>{
   final UserRepository repository;
-  SignUpUseCase(this.repository);
+  final PasswordHashingUtil hashingUtil;
+  SignUpUseCase(this.repository, this.hashingUtil);
   @override
   Future<Either<Failure, User>> call(UserCreateParams params) async{
-    return await repository.createUser(params);
+    var hashedPassword = hashingUtil.hash(params.password);
+    UserCreateParams withHash = UserCreateParams(
+        email: params.email,
+        firstName: params.firstName,
+        lastName: params.lastName,
+        password: hashedPassword,
+    );
+    return await repository.createUser(withHash);
   }
 
 

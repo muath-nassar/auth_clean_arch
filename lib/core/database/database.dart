@@ -35,6 +35,10 @@ class AppDatabase extends _$AppDatabase {
   Future<int> setEmailVerified(int id, bool verified) =>
       (update(users)..where((u) => u.id.equals(id)))
           .write(UsersCompanion(emailVerified: Value(verified)));
+
+  Future<int> changePassword(int id, String password) =>
+      (update(users)..where((u) => u.id.equals(id)))
+          .write(UsersCompanion(hashPassword: Value(password)));
 }
 
 LazyDatabase _openConnection() {

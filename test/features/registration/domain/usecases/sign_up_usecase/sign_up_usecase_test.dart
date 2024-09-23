@@ -1,4 +1,5 @@
 import 'package:auth_clean_arch/core/errors/failures.dart';
+import 'package:auth_clean_arch/core/utils/encryption.dart';
 import 'package:auth_clean_arch/features/registration/domain/entities/user.dart';
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
 import 'package:auth_clean_arch/features/registration/domain/use_cases/sign_up_use_case.dart';
@@ -7,12 +8,14 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../login_usecase/login_usecase_test.mocks.dart';
 import 'sign_up_usecase_test.mocks.dart';
 
 @GenerateMocks([UserRepository])
 main() {
   late MockUserRepository mockUserRepository;
   late SignUpUseCase useCase;
+  late MockPasswordHashingUtil mockPasswordHashingUtil;
   late User testUser;
   String emailTest = 'test@test.com';
   String fNameTest = 'John';
@@ -22,7 +25,8 @@ main() {
 
   setUp(() {
     mockUserRepository = MockUserRepository();
-    useCase = SignUpUseCase(mockUserRepository);
+    mockPasswordHashingUtil = MockPasswordHashingUtil();
+    useCase = SignUpUseCase(mockUserRepository, mockPasswordHashingUtil);
     createdTimeTest = DateTime.now();
     testUser = User(
         id: 1,
@@ -44,6 +48,8 @@ main() {
       // arrange
       when(mockUserRepository.createUser(any))
           .thenAnswer((_) async => Right(testUser));
+      when(mockPasswordHashingUtil.hash(any))
+          .thenAnswer((_)=>'1234*&Abs');
       // act
       var result = await useCase(newUserParams);
       // assert
@@ -58,6 +64,8 @@ main() {
       // arrange
       when(mockUserRepository.createUser(any))
           .thenAnswer((_) async => Left(failure));
+      when(mockPasswordHashingUtil.hash(any))
+          .thenAnswer((_)=>'1234*&Abs');
       // act
       var result = await useCase(newUserParams);
       // assert
