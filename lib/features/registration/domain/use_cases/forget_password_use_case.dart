@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 
 import '../../../../core/errors/failures.dart';
@@ -7,7 +6,8 @@ import '../../../../core/usecases/usecase.dart';
 import '../repositories/user_repository.dart';
 
 int _forgetPassWaitMin = 2;
-class ForgetPasswordUseCase extends UseCase<String, EmailParams>{
+
+class ForgetPasswordUseCase extends UseCase<String, EmailParams> {
   String? verificationCode;
   DateTime? sentTime;
   UserRepository repository;
@@ -18,6 +18,7 @@ class ForgetPasswordUseCase extends UseCase<String, EmailParams>{
     required this.repository,
     required this.forgetPasswordEmailService,
   });
+
   @override
   Future<Either<Failure, String>> call(EmailParams params) {
     return sendEmail(params);
@@ -31,8 +32,9 @@ class ForgetPasswordUseCase extends UseCase<String, EmailParams>{
     var userCall = await repository.getUserByEmail(params.email);
     return userCall.fold((failure) => Left(failure), (user) async {
       verificationCode = generateRandomCode();
-      var sendMailCall = await forgetPasswordEmailService(VerificationMailParams(
-          receiverEmail: params.email, code: verificationCode!));
+      var sendMailCall = await forgetPasswordEmailService(
+          VerificationMailParams(
+              receiverEmail: params.email, code: verificationCode!));
       return sendMailCall.fold((sendFailure) => Left(sendFailure), (code) {
         sentTime = DateTime.now();
         emailToVerify = params.email;
@@ -40,8 +42,17 @@ class ForgetPasswordUseCase extends UseCase<String, EmailParams>{
       });
     });
   }
+
   bool verifyInputCode(String inputCode) {
-    return verifyCode(inputCode,verificationCode,sentTime,_forgetPassWaitMin);
+    return verifyCode(
+        inputCode, verificationCode, sentTime, _forgetPassWaitMin);
   }
 
+  Future<Either<Failure, String>> updatePassword(
+      String inputCode, String newPassword){
+    if (verifyInputCode(inputCode)) {
+      return repository.changePassword(emailToVerify!, newPassword);
+    }
+    return Future.value(const Left(VerificationCodeFailure([]))) ;
+  }
 }
