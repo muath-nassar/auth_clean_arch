@@ -11,6 +11,10 @@ class UserCreateModel extends UserCreateParams {
     required super.password,
   });
 
+  factory UserCreateModel.fromParams(UserCreateParams params){
+    return UserCreateModel(email: params.email, firstName: params.firstName, lastName: params.lastName, password: params.password);
+  }
+
   db.UsersCompanion toDB() {
     return db.UsersCompanion(
       email: Value(email),

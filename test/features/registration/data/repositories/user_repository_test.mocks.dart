@@ -3,14 +3,16 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:auth_clean_arch/features/registration/data/datasources/local_db_datasource.dart'
-    as _i5;
-import 'package:auth_clean_arch/features/registration/data/datasources/local_shared_pref_datasource.dart'
-    as _i3;
-import 'package:auth_clean_arch/features/registration/data/models/user_create_model.dart'
     as _i6;
+import 'package:auth_clean_arch/features/registration/data/datasources/local_shared_pref_datasource.dart'
+    as _i4;
+import 'package:auth_clean_arch/features/registration/data/models/user_create_model.dart'
+    as _i7;
+import 'package:auth_clean_arch/features/registration/data/models/user_login_credentials_model.dart'
+    as _i3;
 import 'package:auth_clean_arch/features/registration/data/models/user_model.dart'
     as _i2;
 import 'package:mockito/mockito.dart' as _i1;
@@ -38,24 +40,35 @@ class _FakeUserModel_0 extends _i1.SmartFake implements _i2.UserModel {
         );
 }
 
+class _FakeUserLoginCredentialsModel_1 extends _i1.SmartFake
+    implements _i3.UserLoginCredentialsModel {
+  _FakeUserLoginCredentialsModel_1(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [LocalSharedPrefDatasource].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockLocalSharedPrefDatasource extends _i1.Mock
-    implements _i3.LocalSharedPrefDatasource {
+    implements _i4.LocalSharedPrefDatasource {
   MockLocalSharedPrefDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<void> cache(int? id) => (super.noSuchMethod(
+  _i5.Future<void> cache(int? id) => (super.noSuchMethod(
         Invocation.method(
           #cache,
           [id],
         ),
-        returnValue: _i4.Future<void>.value(),
-        returnValueForMissingStub: _i4.Future<void>.value(),
-      ) as _i4.Future<void>);
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
 
   @override
   int getCurrentUserId() => (super.noSuchMethod(
@@ -71,53 +84,71 @@ class MockLocalSharedPrefDatasource extends _i1.Mock
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockUserModelLocalDbDatasource extends _i1.Mock
-    implements _i5.UserModelLocalDbDatasource {
+    implements _i6.UserModelLocalDbDatasource {
   MockUserModelLocalDbDatasource() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i4.Future<bool> createUser(_i6.UserCreateModel? user) => (super.noSuchMethod(
+  _i5.Future<bool> createUser(_i7.UserCreateModel? user) => (super.noSuchMethod(
         Invocation.method(
           #createUser,
           [user],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<_i2.UserModel> getUserById(int? id) => (super.noSuchMethod(
+  _i5.Future<_i2.UserModel> getUserById(int? id) => (super.noSuchMethod(
         Invocation.method(
           #getUserById,
           [id],
         ),
-        returnValue: _i4.Future<_i2.UserModel>.value(_FakeUserModel_0(
+        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
           this,
           Invocation.method(
             #getUserById,
             [id],
           ),
         )),
-      ) as _i4.Future<_i2.UserModel>);
+      ) as _i5.Future<_i2.UserModel>);
 
   @override
-  _i4.Future<_i2.UserModel> getUserByEmail(String? email) =>
+  _i5.Future<_i2.UserModel> getUserByEmail(String? email) =>
       (super.noSuchMethod(
         Invocation.method(
           #getUserByEmail,
           [email],
         ),
-        returnValue: _i4.Future<_i2.UserModel>.value(_FakeUserModel_0(
+        returnValue: _i5.Future<_i2.UserModel>.value(_FakeUserModel_0(
           this,
           Invocation.method(
             #getUserByEmail,
             [email],
           ),
         )),
-      ) as _i4.Future<_i2.UserModel>);
+      ) as _i5.Future<_i2.UserModel>);
 
   @override
-  _i4.Future<bool> setEmailVerification(
+  _i5.Future<_i3.UserLoginCredentialsModel> getLoginCredentials(
+          String? email) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getLoginCredentials,
+          [email],
+        ),
+        returnValue: _i5.Future<_i3.UserLoginCredentialsModel>.value(
+            _FakeUserLoginCredentialsModel_1(
+          this,
+          Invocation.method(
+            #getLoginCredentials,
+            [email],
+          ),
+        )),
+      ) as _i5.Future<_i3.UserLoginCredentialsModel>);
+
+  @override
+  _i5.Future<bool> setEmailVerification(
     int? id,
     bool? verified,
   ) =>
@@ -129,11 +160,11 @@ class MockUserModelLocalDbDatasource extends _i1.Mock
             verified,
           ],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<bool> updateLastLogin(
+  _i5.Future<bool> updateLastLogin(
     int? id,
     DateTime? dateTime,
   ) =>
@@ -145,11 +176,11 @@ class MockUserModelLocalDbDatasource extends _i1.Mock
             dateTime,
           ],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<bool> changePassword(
+  _i5.Future<bool> changePassword(
     int? id,
     String? password,
   ) =>
@@ -161,24 +192,24 @@ class MockUserModelLocalDbDatasource extends _i1.Mock
             password,
           ],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<bool> updateUser(_i2.UserModel? userModel) => (super.noSuchMethod(
+  _i5.Future<bool> updateUser(_i2.UserModel? userModel) => (super.noSuchMethod(
         Invocation.method(
           #updateUser,
           [userModel],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 
   @override
-  _i4.Future<bool> deleteUser(int? id) => (super.noSuchMethod(
+  _i5.Future<bool> deleteUser(int? id) => (super.noSuchMethod(
         Invocation.method(
           #deleteUser,
           [id],
         ),
-        returnValue: _i4.Future<bool>.value(false),
-      ) as _i4.Future<bool>);
+        returnValue: _i5.Future<bool>.value(false),
+      ) as _i5.Future<bool>);
 }
