@@ -40,6 +40,10 @@ class EmailFailure extends Failure{
 
 class VerificationCodeFailure extends Failure{
   const VerificationCodeFailure(super.errors);
+}
+
+class InvalidInputFailure extends Failure{
+  const InvalidInputFailure(super.errors);
 
 }
 
