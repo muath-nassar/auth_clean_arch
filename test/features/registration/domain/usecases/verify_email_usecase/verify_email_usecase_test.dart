@@ -122,7 +122,7 @@ main(){
       // Act
       var result = await usecase.sendEmail(emailParamsTest);
       // Assert
-      expect(result, const Left(EmailFailure([])));
+      expect(result, const Left(EmailFailure(['Remaining time 1 minutes and 59 seconds'])));
       verifyZeroInteractions(mockUserRepository);
       verifyZeroInteractions(mockMailService);
 

@@ -12,11 +12,15 @@ class EmailValidator extends InputValidator<String, String> {
 
   @override
   Either<Failure, String> validate(String value) {
+    print('a');
     if (value.isEmpty) {
+      print('b');
       return const Left(InvalidInputFailure([emptyError]));
     } else if (!_emailRegExp.hasMatch(value)) {
+      print('c');
       return const Left(InvalidInputFailure([wrongFormat]));
     }
+    print('d');
     return Right(value);
   }
 }
