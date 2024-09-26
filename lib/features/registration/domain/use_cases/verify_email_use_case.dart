@@ -25,9 +25,11 @@ class VerifyEmailUseCase extends UseCase<String, EmailParams> {
     return sendEmail(params);
   }
 
+  // Duration getRemaining
+
   Future<Either<Failure, String>> sendEmail(EmailParams params) async {
     if (sentTime != null &&
-        DateTime.now().difference(sentTime!).inMinutes > _verifyWaitingInMin) {
+        DateTime.now().difference(sentTime!).inMinutes < _verifyWaitingInMin) {
       return const Left(EmailFailure([]));
     }
     var userCall = await repository.getUserByEmail(params.email);

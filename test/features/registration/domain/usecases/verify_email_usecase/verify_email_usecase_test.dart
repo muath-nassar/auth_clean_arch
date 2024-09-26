@@ -117,8 +117,8 @@ main(){
           .thenAnswer((_)async=>Right(testUser));
       when(mockMailService.call(any)).thenAnswer((_)async=>Right(codeTest));
       var now = DateTime.now();
-      var before6minutes = now.subtract(const Duration(minutes: 6));
-      usecase.sentTime = before6minutes;
+      var before3minutes = now.subtract(const Duration(minutes: 3));
+      usecase.sentTime = before3minutes;
       // Act
       var result = await usecase.sendEmail(emailParamsTest);
       // Assert
