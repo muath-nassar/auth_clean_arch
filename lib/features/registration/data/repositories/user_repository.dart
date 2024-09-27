@@ -21,8 +21,12 @@ class UserRepositoryImp extends UserRepository {
 
   @override
   Future<Either<Failure, User>> createUser(UserCreateParams newUser) async {
-    var query =
-        await dbDatasource.createUser(UserCreateModel.fromParams(newUser));
+    bool query;
+    try{query = await dbDatasource.createUser(UserCreateModel.fromParams(newUser));}
+     on DatabaseWriteException catch(e){
+      return const Left(UserCreateFailure(["User can't be created. The email may be taken!"]));
+     }
+
     if (query) {
       try {
         return Right(await dbDatasource.getUserByEmail(newUser.email));

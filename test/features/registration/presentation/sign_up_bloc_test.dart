@@ -38,7 +38,7 @@ main() {
       createTime: createTime,
       lastLogin: lastLogin,
       emailVerified: emailVerified);
-  SignUpEvent event = RequestSignUpEvent(
+  SignUpEvent event = SignUpRequest(
       email: email,
       password: password,
       firstName: firstName,

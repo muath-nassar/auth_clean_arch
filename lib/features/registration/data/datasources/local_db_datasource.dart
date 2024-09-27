@@ -36,8 +36,13 @@ class UserModelLocalDbDatasourceImpl extends UserModelLocalDbDatasource{
 
   @override
   Future<bool> createUser(UserCreateModel user) async{
+    try{
       var affectedRows = await db.insertUser(user.toDB());
       return affectedRows > 0;
+    } catch(e){
+      throw DatabaseWriteException();
+    }
+
   }
 
   @override

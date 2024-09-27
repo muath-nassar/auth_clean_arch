@@ -22,7 +22,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     required this.signUpUserCase,
   }) : super(SignUpInitial()) {
     on<SignUpEvent>((event, emit) async {
-      if(event is RequestSignUpEvent){
+      if(event is SignUpRequest){
         late String email, firstName, lastName, password;
         // Validation
         var emailValidation = emailValidator.validate(event.email);

@@ -4,13 +4,13 @@ sealed class SignUpEvent extends Equatable {
   const SignUpEvent();
 }
 
-class RequestSignUpEvent extends SignUpEvent{
+class SignUpRequest extends SignUpEvent{
   final String email;
   final String password;
   final String firstName;
   final String lastName;
 
-  const RequestSignUpEvent({
+  const SignUpRequest({
     required this.email,
     required this.password,
     required this.firstName,
