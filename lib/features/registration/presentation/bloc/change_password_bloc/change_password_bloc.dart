@@ -1,6 +1,5 @@
 import 'package:auth_clean_arch/core/usecases/usecase.dart';
 import 'package:auth_clean_arch/core/utils/validators/password_validator.dart';
-import 'package:auth_clean_arch/features/registration/presentation/bloc/verify_email_bloc/verify_email_bloc.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
