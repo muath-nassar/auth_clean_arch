@@ -25,10 +25,21 @@ class UserModel extends User {
       emailVerified: dbUser.emailVerified,
     );
   }
+  factory UserModel.fromUser(User user){
+    return UserModel(
+    id: user.id,
+    email: user.email,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    createTime: user.createTime,
+    lastLogin: user.lastLogin,
+    emailVerified: user.emailVerified,);
+  }
   /// Hash password shouldn't be included. because changing the password need
   /// logic
   db.UsersCompanion toDB(){
     return db.UsersCompanion(
+      id: Value(id),
       email: Value<String>(email),
       firstName: Value<String>(firstName),
       lastName: Value<String>(lastName),

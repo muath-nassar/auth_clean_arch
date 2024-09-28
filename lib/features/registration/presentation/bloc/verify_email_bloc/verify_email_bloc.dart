@@ -17,17 +17,17 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
   VerifyEmailBloc(
       {required this.emailValidator, required this.verifyEmailUseCase})
       : super(VerifyEmailInitial()) {
-    on<VerifyEmailEvent>((event, emit) {
+    on<VerifyEmailEvent>((event, emit) async{
       if(event is SendEmailEvent){
-       _onSendEvent(event,emit);
+       await _onSendEvent(event,emit);
       }
       if(event is VerifyCodeEvent){
-        _onVerifyCodeEvent(event, emit);
+        await _onVerifyCodeEvent(event, emit);
       }
     });
   }
 
-  void _onSendEvent(SendEmailEvent event, emit)async{
+  Future<void> _onSendEvent(SendEmailEvent event, emit)async{
     // Step 1 start validate email
     late String email;
     var validationEmail = emailValidator.validate(event.email);
@@ -43,17 +43,12 @@ class VerifyEmailBloc extends Bloc<VerifyEmailEvent, VerifyEmailState> {
     emit(Sending());
     var sendEmailCall = await verifyEmailUseCase
         .sendEmail(EmailParams(email: email));
-    sendEmailCall.fold(
-            (sendFailure){
-          emit(SendError(sendFailure));
-        },
-            (sentCode){
-          emit(SendSuccess());
-        });
+      sendEmailCall.fold((failure){emit(SendError(failure));}, (_){emit(SendSuccess());});
   }
 
   Future<void> _onVerifyCodeEvent(VerifyCodeEvent event, Emitter<VerifyEmailState> emit) async {
-    (await verifyEmailUseCase.verifyEmail(event.inputCode)).fold(
+    var verify = await verifyEmailUseCase.verifyEmail(event.inputCode);
+    verify.fold(
             (failure){
               emit(UnverifiedEmail(failure));
             },

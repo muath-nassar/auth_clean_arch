@@ -66,7 +66,7 @@ void initUseCases() {
   getIt.registerLazySingleton(() => SignOutUseCase(getIt()));
   getIt.registerLazySingleton(() => DeleteAccountUsecase(getIt()));
   getIt.registerLazySingleton(() => ForgetPasswordUseCase(
-      repository: getIt(), forgetPasswordEmailService: getIt()));
+      repository: getIt(), forgetPasswordEmailService: getIt(), hashingUtil: getIt()));
   getIt.registerLazySingleton(() => VerifyEmailUseCase(
       repository: getIt(), verificationEmailService: getIt()));
 }

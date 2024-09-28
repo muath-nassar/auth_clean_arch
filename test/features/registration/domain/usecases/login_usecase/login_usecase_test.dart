@@ -126,7 +126,7 @@ main() {
       // Act
       var result = await useCase(loginParams);
       // Assert
-      expect(result, const Left(WrongCredentialsFailure([])));
+      expect(result, const Left(WrongCredentialsFailure(['Please check your provided email and password.'])));
       verify(mockUserRepository.getUserAuthCredentials(emailTest));
       verify(mockHashUtil.verifyPassword(passwordTest, encryptedPasswordTest));
       verifyNoMoreInteractions(mockUserRepository);
@@ -145,7 +145,7 @@ main() {
           // Act
           var result = await useCase(loginParams);
           // Assert
-          expect(result, const Left(EmailNotVerifiedFailure([])));
+          expect(result, const Left(EmailNotVerifiedFailure(['test@test.com is not verified.'])));
           verify(mockUserRepository.getUserAuthCredentials(emailTest));
           verify(mockHashUtil.verifyPassword(passwordTest, encryptedPasswordTest));
           verify(mockUserRepository.getUserByEmail(emailTest));

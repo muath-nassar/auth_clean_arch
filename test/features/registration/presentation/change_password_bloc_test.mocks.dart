@@ -3,19 +3,20 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i9;
+import 'dart:async' as _i10;
 
-import 'package:auth_clean_arch/core/errors/failures.dart' as _i6;
+import 'package:auth_clean_arch/core/errors/failures.dart' as _i7;
 import 'package:auth_clean_arch/core/services/email_service.dart' as _i4;
-import 'package:auth_clean_arch/core/usecases/usecase.dart' as _i10;
+import 'package:auth_clean_arch/core/usecases/usecase.dart' as _i11;
+import 'package:auth_clean_arch/core/utils/encryption.dart' as _i5;
 import 'package:auth_clean_arch/core/utils/validators/email_validator.dart'
-    as _i5;
+    as _i6;
 import 'package:auth_clean_arch/core/utils/validators/password_validator.dart'
-    as _i7;
+    as _i8;
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart'
     as _i3;
 import 'package:auth_clean_arch/features/registration/domain/use_cases/forget_password_use_case.dart'
-    as _i8;
+    as _i9;
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:mockito/mockito.dart' as _i1;
 
@@ -64,61 +65,72 @@ class _FakeForgetPasswordEmailService_2 extends _i1.SmartFake
         );
 }
 
+class _FakePasswordHashingUtil_3 extends _i1.SmartFake
+    implements _i5.PasswordHashingUtil {
+  _FakePasswordHashingUtil_3(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [EmailValidator].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockEmailValidator extends _i1.Mock implements _i5.EmailValidator {
+class MockEmailValidator extends _i1.Mock implements _i6.EmailValidator {
   MockEmailValidator() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Either<_i6.Failure, String> validate(String? value) =>
+  _i2.Either<_i7.Failure, String> validate(String? value) =>
       (super.noSuchMethod(
         Invocation.method(
           #validate,
           [value],
         ),
-        returnValue: _FakeEither_0<_i6.Failure, String>(
+        returnValue: _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
             #validate,
             [value],
           ),
         ),
-      ) as _i2.Either<_i6.Failure, String>);
+      ) as _i2.Either<_i7.Failure, String>);
 }
 
 /// A class which mocks [PasswordValidator].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPasswordValidator extends _i1.Mock implements _i7.PasswordValidator {
+class MockPasswordValidator extends _i1.Mock implements _i8.PasswordValidator {
   MockPasswordValidator() {
     _i1.throwOnMissingStub(this);
   }
 
   @override
-  _i2.Either<_i6.Failure, String> validate(String? value) =>
+  _i2.Either<_i7.Failure, String> validate(String? value) =>
       (super.noSuchMethod(
         Invocation.method(
           #validate,
           [value],
         ),
-        returnValue: _FakeEither_0<_i6.Failure, String>(
+        returnValue: _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
             #validate,
             [value],
           ),
         ),
-      ) as _i2.Either<_i6.Failure, String>);
+      ) as _i2.Either<_i7.Failure, String>);
 }
 
 /// A class which mocks [ForgetPasswordUseCase].
 ///
 /// See the documentation for Mockito's code generation for more information.
 class MockForgetPasswordUseCase extends _i1.Mock
-    implements _i8.ForgetPasswordUseCase {
+    implements _i9.ForgetPasswordUseCase {
   MockForgetPasswordUseCase() {
     _i1.throwOnMissingStub(this);
   }
@@ -190,39 +202,57 @@ class MockForgetPasswordUseCase extends _i1.Mock
       );
 
   @override
-  _i9.Future<_i2.Either<_i6.Failure, String>> call(_i10.EmailParams? params) =>
+  _i5.PasswordHashingUtil get hashingUtil => (super.noSuchMethod(
+        Invocation.getter(#hashingUtil),
+        returnValue: _FakePasswordHashingUtil_3(
+          this,
+          Invocation.getter(#hashingUtil),
+        ),
+      ) as _i5.PasswordHashingUtil);
+
+  @override
+  set hashingUtil(_i5.PasswordHashingUtil? _hashingUtil) => super.noSuchMethod(
+        Invocation.setter(
+          #hashingUtil,
+          _hashingUtil,
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  _i10.Future<_i2.Either<_i7.Failure, String>> call(_i11.EmailParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #call,
           [params],
         ),
-        returnValue: _i9.Future<_i2.Either<_i6.Failure, String>>.value(
-            _FakeEither_0<_i6.Failure, String>(
+        returnValue: _i10.Future<_i2.Either<_i7.Failure, String>>.value(
+            _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
             #call,
             [params],
           ),
         )),
-      ) as _i9.Future<_i2.Either<_i6.Failure, String>>);
+      ) as _i10.Future<_i2.Either<_i7.Failure, String>>);
 
   @override
-  _i9.Future<_i2.Either<_i6.Failure, String>> sendEmail(
-          _i10.EmailParams? params) =>
+  _i10.Future<_i2.Either<_i7.Failure, String>> sendEmail(
+          _i11.EmailParams? params) =>
       (super.noSuchMethod(
         Invocation.method(
           #sendEmail,
           [params],
         ),
-        returnValue: _i9.Future<_i2.Either<_i6.Failure, String>>.value(
-            _FakeEither_0<_i6.Failure, String>(
+        returnValue: _i10.Future<_i2.Either<_i7.Failure, String>>.value(
+            _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
             #sendEmail,
             [params],
           ),
         )),
-      ) as _i9.Future<_i2.Either<_i6.Failure, String>>);
+      ) as _i10.Future<_i2.Either<_i7.Failure, String>>);
 
   @override
   bool verifyInputCode(String? inputCode) => (super.noSuchMethod(
@@ -234,7 +264,7 @@ class MockForgetPasswordUseCase extends _i1.Mock
       ) as bool);
 
   @override
-  _i9.Future<_i2.Either<_i6.Failure, String>> updatePassword(
+  _i10.Future<_i2.Either<_i7.Failure, String>> updatePassword(
     String? inputCode,
     String? newPassword,
   ) =>
@@ -246,8 +276,8 @@ class MockForgetPasswordUseCase extends _i1.Mock
             newPassword,
           ],
         ),
-        returnValue: _i9.Future<_i2.Either<_i6.Failure, String>>.value(
-            _FakeEither_0<_i6.Failure, String>(
+        returnValue: _i10.Future<_i2.Either<_i7.Failure, String>>.value(
+            _FakeEither_0<_i7.Failure, String>(
           this,
           Invocation.method(
             #updatePassword,
@@ -257,5 +287,5 @@ class MockForgetPasswordUseCase extends _i1.Mock
             ],
           ),
         )),
-      ) as _i9.Future<_i2.Either<_i6.Failure, String>>);
+      ) as _i10.Future<_i2.Either<_i7.Failure, String>>);
 }

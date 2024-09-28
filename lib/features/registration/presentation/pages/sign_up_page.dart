@@ -1,5 +1,6 @@
 import 'package:auth_clean_arch/core/common.dart';
 import 'package:auth_clean_arch/di.dart';
+import 'package:auth_clean_arch/features/registration/presentation/pages/forget_password_page.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/sign_in_page.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/verify_email_page.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +42,7 @@ class _SignUpPageState extends State<SignUpPage> {
         child: Container(
           padding: const EdgeInsets.all(24.0),
           height: MediaQuery.sizeOf(context).height / 1.1,
-          width: MediaQuery.sizeOf(context).width / 3,
+          width: MediaQuery.sizeOf(context).width / 1.2,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
@@ -103,7 +104,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   }
                   if (state is Success) {
                     WidgetsBinding.instance.addPostFrameCallback((_) {
-                      navigateWithFade(context, const VerifyEmailPage());
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const VerifyEmailPage()));
                     });
                     return const Text('User created successfully');
                   }
@@ -125,7 +126,7 @@ class _SignUpPageState extends State<SignUpPage> {
               const SizedBox(height: 16),
               TextButton(
                 onPressed: () {
-                  // Placeholder for "Forgot Password"
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>const ChangePasswordPage()));
                 },
                 child: const Text('Forgot Password?'),
               ),

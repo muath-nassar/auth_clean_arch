@@ -20,7 +20,13 @@ class AppDatabase extends _$AppDatabase {
 
   Future<int> insertUser(UsersCompanion user) => into(users).insert(user);
 
-  Future<bool> updateUser(UsersCompanion user) => update(users).replace(user);
+  Future<bool> updateUser(UsersCompanion user) async{
+    // return update(users).replace(user);
+    final updatedCount = await (update(users)..where((tbl)
+    => tbl.id.equals(user.id.value))).write(user);
+
+    return updatedCount > 0;
+  }
 
   Future<int> deleteUser(int id) => (delete(users)..where((u) => u.id.equals(id))).go();
 

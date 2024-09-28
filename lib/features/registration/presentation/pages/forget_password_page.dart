@@ -1,43 +1,43 @@
 import 'package:auth_clean_arch/core/common.dart';
 import 'package:auth_clean_arch/di.dart';
-import 'package:auth_clean_arch/features/registration/presentation/bloc/verify_email_bloc/verify_email_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../bloc/change_password_bloc/change_password_bloc.dart';
+import '../bloc/sign_in_bloc/sign_in_bloc.dart'; // Import your ChangePasswordBloc
 
-class VerifyEmailPage extends StatefulWidget {
-  final String? providedEmail;
-
-  const VerifyEmailPage({super.key, this.providedEmail});
+class ChangePasswordPage extends StatefulWidget {
+  const ChangePasswordPage({super.key});
 
   @override
-  State<VerifyEmailPage> createState() => _VerifyEmailPageState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 }
 
-class _VerifyEmailPageState extends State<VerifyEmailPage> {
-  late final VerifyEmailBloc _bloc;
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _verificationCodeController =
+      TextEditingController();
+  final TextEditingController _newPasswordController = TextEditingController();
+  late final ChangePasswordBloc _changePasswordBloc;
 
   @override
   void initState() {
-    _bloc = getIt<VerifyEmailBloc>();
+    _changePasswordBloc = getIt<ChangePasswordBloc>();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final TextEditingController _emailController = TextEditingController();
-    final TextEditingController _codeController = TextEditingController();
-
     return BlocProvider(
-      create: (context) => _bloc,
+      create: (context) => _changePasswordBloc,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Verify Email'),
+          title: const Text('Change Password'),
           centerTitle: true,
         ),
         body: Center(
           child: Container(
             padding: const EdgeInsets.all(24.0),
-            height: MediaQuery.sizeOf(context).height / 1.8,
+            height: MediaQuery.sizeOf(context).height / 1.5,
             width: MediaQuery.sizeOf(context).width / 1.2,
             decoration: BoxDecoration(
               color: Colors.white,
@@ -51,10 +51,11 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
               ],
             ),
             child: Column(
+              mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const Text(
-                  'Verify Your Email',
+                  'Change Your Password',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
@@ -62,76 +63,67 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 24),
-
-                // Email Input
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     border: OutlineInputBorder(),
                   ),
-                  keyboardType: TextInputType.emailAddress,
                 ),
                 const SizedBox(height: 16),
-
-                // Code Input
                 TextField(
-                  controller: _codeController,
+                  controller: _verificationCodeController,
                   decoration: const InputDecoration(
                     labelText: 'Verification Code',
                     border: OutlineInputBorder(),
                   ),
-                  keyboardType: TextInputType.number,
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _newPasswordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                    labelText: 'New Password',
+                    border: OutlineInputBorder(),
+                  ),
                 ),
                 const SizedBox(height: 24),
-                BlocBuilder<VerifyEmailBloc, VerifyEmailState>(
+                BlocBuilder<ChangePasswordBloc, ChangePasswordState>(
                   builder: (context, state) {
-                    if(state is InvalidEmail){
-                      return failureMessagesColumn(state.failure);
-                    }
-                    if(state is SendError){
-                      return failureMessagesColumn(state.failure);
-                    }
-                    if (state is Sending) {
+                    if (state is Loading) {
                       return const Center(
                         child: CircularProgressIndicator.adaptive(),
                       );
                     }
-                    if(state is SendSuccess){
-                      return const Text('Please check your email. You should have the code.');
+                    if (state is ChangePasswordSuccessState) {
+                      return const Text('Password changed successfully!');
                     }
-                    if(state is UnverifiedEmail){
-                      return const Text('Wrong code. please check your email.');
+                    if (state is ChangePasswordErrorState) {
+                      return failureMessagesColumn(state.failure);
                     }
-                    if(state is VerifiedEmail){
-                      return const Text('your email is verified now.');
-
-                    }
-
-
                     return Container();
                   },
-                )
-                ,
-                // Submit Button
-                ElevatedButton(
-                  onPressed: () {
-                    // Handle submit action
-                    // String email = _emailController.text;
-                     String code = _codeController.text.trim();
-                    _bloc.add( VerifyCodeEvent(code));
-                    // Trigger the verification process here
-                  },
-                  child: const Text('Submit'),
                 ),
                 const SizedBox(height: 16),
-
-                // Resend Button
-                TextButton(
+                ElevatedButton(
                   onPressed: () {
-                    _bloc.add(SendEmailEvent(_emailController.text.trim()));
+                    // Trigger the event to send the verification code
+                    _changePasswordBloc.add(SendEmail(
+                      _emailController.text.trim(),
+                    ));
                   },
                   child: const Text('Send Code'),
+                ),
+                const SizedBox(height: 16),
+                ElevatedButton(
+                  onPressed: () {
+                    // Trigger the event to change the password
+                    _changePasswordBloc.add(ChangePasswordRequest(
+                      _newPasswordController.text.trim(),
+                      _verificationCodeController.text.trim(),
+                    ));
+                  },
+                  child: const Text('Change Password'),
                 ),
               ],
             ),

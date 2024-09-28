@@ -19,12 +19,12 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
     required this.passwordValidator,
     required this.useCase,
 }) : super(ChangePasswordInitial()) {
-    on<ChangePasswordEvent>((event, emit) {
+    on<ChangePasswordEvent>((event, emit) async {
       if(event is SendEmail){
-        _onSendEmailEvent(event,emit);
+       await _onSendEmailEvent(event,emit);
       }
       if(event is ChangePasswordRequest){
-        _onVerifyCodeEvent(event,emit);
+        await _onVerifyCodeEvent(event,emit);
       }
     });
   }
@@ -54,7 +54,7 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
     });
   }
 
-  void _onVerifyCodeEvent(ChangePasswordRequest event, Emitter<ChangePasswordState> emit)async {
+  Future<void> _onVerifyCodeEvent(ChangePasswordRequest event, Emitter<ChangePasswordState> emit)async {
     late String newPassword;
     var passwordValidation = passwordValidator.validate(event.newPassword);
     passwordValidation.fold(

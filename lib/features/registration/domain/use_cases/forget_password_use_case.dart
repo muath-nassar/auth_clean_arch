@@ -3,6 +3,7 @@ import 'package:dartz/dartz.dart';
 import '../../../../core/errors/failures.dart';
 import '../../../../core/services/email_service.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../../../../core/utils/encryption.dart';
 import '../repositories/user_repository.dart';
 
 int _forgetPassWaitMin = 2;
@@ -13,10 +14,12 @@ class ForgetPasswordUseCase extends UseCase<String, EmailParams> {
   UserRepository repository;
   ForgetPasswordEmailService forgetPasswordEmailService;
   String? emailToVerify;
+  PasswordHashingUtil hashingUtil;
 
   ForgetPasswordUseCase({
     required this.repository,
     required this.forgetPasswordEmailService,
+    required this.hashingUtil
   });
 
   @override
@@ -51,7 +54,7 @@ class ForgetPasswordUseCase extends UseCase<String, EmailParams> {
   Future<Either<Failure, String>> updatePassword(
       String inputCode, String newPassword){
     if (verifyInputCode(inputCode)) {
-      return repository.changePassword(emailToVerify!, newPassword);
+      return repository.changePassword(emailToVerify!, hashingUtil.hash(newPassword));
     }
     return Future.value(const Left(VerificationCodeFailure([]))) ;
   }

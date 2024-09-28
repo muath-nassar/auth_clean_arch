@@ -1,5 +1,6 @@
 import 'package:auth_clean_arch/core/errors/failures.dart';
 import 'package:auth_clean_arch/core/usecases/usecase.dart';
+import 'package:auth_clean_arch/features/registration/data/models/user_model.dart';
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
@@ -33,14 +34,21 @@ class LoginUseCase extends UseCase<User, LoginParams> {
             var cacheCall = await repository.cacheCurrentUser(user.id);
             return cacheCall.fold(
                 (cacheFailure) => Left(cacheFailure),
-                (id){
-                  return Right(user);
+                (id) async {
+                  DateTime newLoginTime = DateTime.now();
+                  UserModel userModel = UserModel.fromUser(user);
+                  UserModel newUserModel = UserModel(id: userModel.id, email: userModel.email, firstName: userModel.firstName, lastName: userModel.lastName, createTime: userModel.createTime, lastLogin: newLoginTime, emailVerified: userModel.emailVerified);
+                  await repository.updateUser(newUserModel);
+                  var newLoginUpdated = await repository.getUserById(user.id);
+                  late User updatedUser;
+                  newLoginUpdated.fold((_){}, (u){updatedUser = u;});
+                  return Right(updatedUser);
                 });
           }
-          return const Left(EmailNotVerifiedFailure([]));
+          return Left(EmailNotVerifiedFailure(['${user.email} is not verified.']));
         });
       }
-      return const Left(WrongCredentialsFailure([]));
+      return const Left(WrongCredentialsFailure(['Please check your provided email and password.']));
     });
   }
 }

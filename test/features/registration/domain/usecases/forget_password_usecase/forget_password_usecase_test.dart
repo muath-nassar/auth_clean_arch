@@ -9,6 +9,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
+import '../login_usecase/login_usecase_test.mocks.dart';
 import '../sign_up_usecase/sign_up_usecase_test.mocks.dart';
 import 'forget_password_usecase_test.mocks.dart';
 
@@ -27,14 +28,17 @@ main(){
   late DateTime createdTimeTest;
   late DateTime lastLoginTest;
   late EmailParams emailParamsTest;
+  late MockPasswordHashingUtil mockPasswordHashingUtil;
   late VerificationMailParams verificationMailParams;
 
   setUp(() {
     mockMailService = MockForgetPasswordEmailService();
     mockUserRepository = MockUserRepository();
+    mockPasswordHashingUtil = MockPasswordHashingUtil();
+
     usecase = ForgetPasswordUseCase(
         repository: mockUserRepository,
-      forgetPasswordEmailService: mockMailService,
+      forgetPasswordEmailService: mockMailService, hashingUtil: mockPasswordHashingUtil,
         );
     lastLoginTest = DateTime.now();
     createdTimeTest = DateTime.now().subtract(const Duration(days: 2));
@@ -186,6 +190,7 @@ main(){
       when(mockUserRepository.getUserByEmail(any))
           .thenAnswer((_)async=>Right(testUser));
       when(mockUserRepository.changePassword(any, any)).thenAnswer((_)async=> Right(newPassword));
+      when(mockPasswordHashingUtil.hash(any)).thenAnswer((_)=>newPassword);
       // Act
       var result = await usecase.updatePassword(codeTest, newPassword);
       // Assert

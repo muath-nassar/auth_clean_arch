@@ -47,17 +47,25 @@ class VerifyEmailUseCase extends UseCase<String, EmailParams> {
         DateTime.now().difference(sentTime!).inMinutes < _verifyWaitingInMin) {
       return Left(EmailFailure([_getTimerErrorMSg()]));
     }
-    var userCall = await repository.getUserByEmail(params.email);
-    return userCall.fold((failure) => Left(failure), (user) async {
-      verificationCode = generateRandomCode();
-      var sendMailCall = await verificationEmailService(VerificationMailParams(
-          receiverEmail: params.email, code: verificationCode!));
-      return sendMailCall.fold((sendFailure) => Left(sendFailure), (code) {
-        sentTime = DateTime.now();
-        emailToVerify = params.email;
-        return Right(code);
+    // try{
+      var userCall = await repository.getUserByEmail(params.email);
+      return userCall.fold((failure) => Left(failure), (user) async {
+        verificationCode = generateRandomCode();
+        var sendMailCall = await verificationEmailService(VerificationMailParams(
+            receiverEmail: params.email, code: verificationCode!));
+        return sendMailCall.fold((sendFailure) {
+          print('********');
+          return Left(sendFailure);
+        }, (code) {
+          sentTime = DateTime.now();
+          emailToVerify = params.email;
+          return Right(code);
+        });
       });
-    });
+    // }catch(e){
+    //   return const Left(EmailFailure(['Something is wrong while sending the email']));
+    // }
+
   }
 
   bool verifyInputCode(String inputCode) {
@@ -70,7 +78,7 @@ class VerifyEmailUseCase extends UseCase<String, EmailParams> {
           await repository.getUserByEmail(emailToVerify!);
       return getTheEmailUserCall.fold(
               (getFailure) => Left(getFailure),
-              (user)=> repository.updateUser(updateVerifiedEmailField(user))
+              (user)=>  repository.updateUser(updateVerifiedEmailField(user))
       );
     }
     return const Left(VerificationCodeFailure([]));

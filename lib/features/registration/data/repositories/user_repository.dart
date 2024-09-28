@@ -8,6 +8,7 @@ import 'package:auth_clean_arch/features/registration/domain/entities/user.dart'
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
 import 'package:auth_clean_arch/features/registration/domain/use_cases/sign_up_use_case.dart';
 import 'package:dartz/dartz.dart';
+import 'package:drift/drift.dart';
 import 'package:flutter/material.dart';
 
 class UserRepositoryImp extends UserRepository {
@@ -23,7 +24,8 @@ class UserRepositoryImp extends UserRepository {
   Future<Either<Failure, User>> createUser(UserCreateParams newUser) async {
     bool query;
     try{query = await dbDatasource.createUser(UserCreateModel.fromParams(newUser));}
-     on DatabaseWriteException catch(e){
+     on InvalidDataException catch(e){
+      print(e);
       return const Left(UserCreateFailure(["User can't be created. The email may be taken!"]));
      }
 
@@ -72,7 +74,8 @@ class UserRepositoryImp extends UserRepository {
   @override
   Future<Either<Failure, User>> updateUser(User updatedUser) async {
     try {
-      var update = await dbDatasource.updateUser(updatedUser as UserModel);
+      UserModel u = UserModel.fromUser(updatedUser);
+      var update = await dbDatasource.updateUser(u);
       if (update) {
         var afterUpdate = await dbDatasource.getUserById(updatedUser.id);
         return Right(afterUpdate);

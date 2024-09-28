@@ -26,6 +26,7 @@ main() {
         emailVerified: true);
 
     usersCompanionTest = db.UsersCompanion(
+        id: const Value(1),
         email: const Value('test@test.com'),
         firstName: const Value('John'),
         lastName: const Value('Smith'),
