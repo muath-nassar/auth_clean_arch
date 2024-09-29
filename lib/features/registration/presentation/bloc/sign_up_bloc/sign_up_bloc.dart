@@ -23,36 +23,9 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }) : super(SignUpInitial()) {
     on<SignUpEvent>((event, emit) async {
       if(event is SignUpRequest){
-        late String email, firstName, lastName, password;
-        // Validation
-        var emailValidation = emailValidator.validate(event.email);
-        emailValidation.fold(
-                (failure){emit(Error(failure));},
-                (value){email = value;});
-        if (emailValidation.isLeft()) return;
-        var passwordValidation = passwordValidator.validate(event.password);
-        passwordValidation.fold(
-                (failure){emit(Error(failure));},
-                (value){password = value;});
-        if (passwordValidation.isLeft()) return;
-        firstName = event.firstName;
-        lastName = event.lastName;
-        UserCreateParams params = UserCreateParams(
-            email: email,
-            firstName: firstName,
-            lastName: lastName,
-            password: password,
-        );
 
         emit(Loading());
-        var userCreation = await signUpUserCase(params);
-        userCreation.fold(
-                (failure){
-                  emit(Error(failure));
-                },
-                (newUser){
-                  emit(Success(newUser));
-                });
+
       }
     });
   }

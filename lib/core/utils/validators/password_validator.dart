@@ -1,18 +1,8 @@
 import 'package:auth_clean_arch/core/errors/failures.dart';
 import 'package:auth_clean_arch/core/utils/validators/input_validator.dart';
-import 'package:dartz/dartz.dart';
-//
-// class PasswordValidator extends InputValidator<String, String> {
-//   static const String errorLength = 'Password should be 8 characters or more.';
-//   static const String errorNumber = 'Password should have at least one number.';
-//   static const String errorLowercase =
-//       'Password should have at least one uppercase letter.';
-//   static const String errorUppercase =
-//       'Password should have at least one uppercase letter.';
-//
-//   @override
-//   Either<Failure, String> validate(String value) {}
-// }
+
+import '../../result/result.dart';
+
 class PasswordValidator extends InputValidator<String, String> {
   static const String errorLength = 'Password should be 8 characters or more.';
   static const String errorNumber = 'Password should have at least one number.';
@@ -22,7 +12,7 @@ class PasswordValidator extends InputValidator<String, String> {
       'Password should have at least one uppercase letter.';
 
   @override
-  Either<Failure, String> validate(String value) {
+  Result<String> validate(String value) {
     List<String> errors = [];
 
     // Check length
@@ -47,11 +37,11 @@ class PasswordValidator extends InputValidator<String, String> {
 
     // Return failure if there are any validation errors
     if (errors.isNotEmpty) {
-      return Left(InvalidInputFailure(errors));
+      return Result.failure(InvalidInputFailure(errors));
     }
 
     // If no errors, return the validated password
-    return Right(value);
+    return Result.success(value);
   }
 
   // Helper function to check if the password contains at least one number

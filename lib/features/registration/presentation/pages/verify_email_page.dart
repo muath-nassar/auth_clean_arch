@@ -18,7 +18,7 @@ class _VerifyEmailPageState extends State<VerifyEmailPage> {
 
   @override
   void initState() {
-    _bloc = getIt<VerifyEmailBloc>();
+    // _bloc = getIt<VerifyEmailBloc>();
     super.initState();
   }
 

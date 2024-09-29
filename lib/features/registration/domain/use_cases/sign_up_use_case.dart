@@ -1,11 +1,8 @@
-import 'package:auth_clean_arch/core/errors/failures.dart';
 import 'package:auth_clean_arch/core/result/result.dart';
 import 'package:auth_clean_arch/core/usecases/usecase.dart';
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
-import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../../core/utils/encryption.dart';
 import '../entities/user.dart';
 
 class SignUpUseCase extends UseCase<User,UserCreateParams>{

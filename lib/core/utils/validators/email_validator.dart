@@ -1,6 +1,6 @@
 import 'package:auth_clean_arch/core/errors/failures.dart';
+import 'package:auth_clean_arch/core/result/result.dart';
 import 'package:auth_clean_arch/core/utils/validators/input_validator.dart';
-import 'package:dartz/dartz.dart';
 
 
 class EmailValidator extends InputValidator<String, String> {
@@ -11,16 +11,12 @@ class EmailValidator extends InputValidator<String, String> {
   static const String wrongFormat = 'Invalid email format';
 
   @override
-  Either<Failure, String> validate(String value) {
-    print('a');
+  Result<String> validate(String value) {
     if (value.isEmpty) {
-      print('b');
-      return const Left(InvalidInputFailure([emptyError]));
+      return Result.failure(const InvalidInputFailure([emptyError]));
     } else if (!_emailRegExp.hasMatch(value)) {
-      print('c');
-      return const Left(InvalidInputFailure([wrongFormat]));
+      return Result.failure(const InvalidInputFailure([wrongFormat]));
     }
-    print('d');
-    return Right(value);
+    return Result.success(value);
   }
 }

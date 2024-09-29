@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import '../../domain/entities/user.dart';
 
 class HomePage extends StatelessWidget {
@@ -28,15 +27,15 @@ class HomePage extends StatelessWidget {
               style: const TextStyle(fontSize: 16),
             ),
             const SizedBox(height: 8),
-            Text(
-              'Created At: ${formatDateTime(user.createTime)}',
-              style: const TextStyle(fontSize: 16),
-            ),
+            // Text(
+            //   'Created At: ${formatDateTime(user.createTime)}',
+            //   style: const TextStyle(fontSize: 16),
+            // ),
             const SizedBox(height: 8),
-            Text(
-              'Last Login:  ${formatDateTime(user.lastLogin!)}',
-              style: const TextStyle(fontSize: 16),
-            ),
+            // Text(
+            //   'Last Login:  ${formatDateTime(user.lastLogin!)}',
+            //   style: const TextStyle(fontSize: 16),
+            // ),
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
@@ -61,10 +60,3 @@ class HomePage extends StatelessWidget {
   }
 }
 
-String formatDateTime(DateTime dateTime) {
-  // Define the desired date and time format
-  final DateFormat formatter = DateFormat('M/d/yyyy, h:mm a');
-
-  // Format the DateTime object
-  return formatter.format(dateTime);
-}

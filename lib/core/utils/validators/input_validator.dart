@@ -1,6 +1,5 @@
-import 'package:dartz/dartz.dart';
-import '../../errors/failures.dart';
+import 'package:auth_clean_arch/core/result/result.dart';
 
 abstract class InputValidator<InputType,ReturnType>{
-  Either<Failure, ReturnType> validate(InputType value);
+  Result<ReturnType> validate(InputType value);
 }

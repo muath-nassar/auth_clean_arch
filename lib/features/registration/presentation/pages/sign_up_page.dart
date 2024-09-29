@@ -26,7 +26,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    _signUpBloc = getIt<SignUpBloc>();
+    // _signUpBloc = getIt<SignUpBloc>();
     super.initState();
   }
   @override

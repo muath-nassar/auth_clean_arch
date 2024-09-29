@@ -12,6 +12,7 @@ abstract class UserRepository {
       String email, String password, String firstName, String lastName);
 
   Future<Result<User>> login(String email, String password);
+
   Future<Result<void>> logout();
 
   // UPDATE methods

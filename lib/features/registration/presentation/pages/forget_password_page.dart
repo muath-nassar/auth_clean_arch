@@ -21,7 +21,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   @override
   void initState() {
-    _changePasswordBloc = getIt<ChangePasswordBloc>();
+    // _changePasswordBloc = getIt<ChangePasswordBloc>();
     super.initState();
   }
 
