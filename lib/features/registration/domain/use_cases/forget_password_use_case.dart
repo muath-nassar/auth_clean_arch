@@ -1,61 +1,23 @@
-import 'package:dartz/dartz.dart';
-
-import '../../../../core/errors/failures.dart';
-import '../../../../core/services/email_service.dart';
+import 'package:auth_clean_arch/core/result/result.dart';
+import 'package:equatable/equatable.dart';
 import '../../../../core/usecases/usecase.dart';
-import '../../../../core/utils/encryption.dart';
-import '../repositories/user_repository.dart';
 
-int _forgetPassWaitMin = 2;
 
-class ForgetPasswordUseCase extends UseCase<String, EmailParams> {
-  String? verificationCode;
-  DateTime? sentTime;
-  UserRepository repository;
-  ForgetPasswordEmailService forgetPasswordEmailService;
-  String? emailToVerify;
-  PasswordHashingUtil hashingUtil;
-
-  ForgetPasswordUseCase({
-    required this.repository,
-    required this.forgetPasswordEmailService,
-    required this.hashingUtil
-  });
-
+class ForgetPasswordUseCase extends UseCase<String, ForgetPasswordParams> {
   @override
-  Future<Either<Failure, String>> call(EmailParams params) {
-    return sendEmail(params);
-  }
-
-  Future<Either<Failure, String>> sendEmail(EmailParams params) async {
-    if (sentTime != null &&
-        DateTime.now().difference(sentTime!).inMinutes > _forgetPassWaitMin) {
-      return const Left(EmailFailure([]));
-    }
-    var userCall = await repository.getUserByEmail(params.email);
-    return userCall.fold((failure) => Left(failure), (user) async {
-      verificationCode = generateRandomCode();
-      var sendMailCall = await forgetPasswordEmailService(
-          VerificationMailParams(
-              receiverEmail: params.email, code: verificationCode!));
-      return sendMailCall.fold((sendFailure) => Left(sendFailure), (code) {
-        sentTime = DateTime.now();
-        emailToVerify = params.email;
-        return Right(code);
-      });
-    });
-  }
-
-  bool verifyInputCode(String inputCode) {
-    return verifyCode(
-        inputCode, verificationCode, sentTime, _forgetPassWaitMin);
-  }
-
-  Future<Either<Failure, String>> updatePassword(
-      String inputCode, String newPassword){
-    if (verifyInputCode(inputCode)) {
-      return repository.changePassword(emailToVerify!, hashingUtil.hash(newPassword));
-    }
-    return Future.value(const Left(VerificationCodeFailure([]))) ;
+  Future<Result<String>> call(params) {
+    // TODO: implement call
+    throw UnimplementedError();
   }
 }
+
+class ForgetPasswordParams extends Equatable{
+
+  final String email;
+
+  const ForgetPasswordParams(this.email);
+
+  @override
+  List<Object?> get props => [email];
+}
+

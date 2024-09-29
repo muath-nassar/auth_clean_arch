@@ -1,20 +1,25 @@
-import 'package:auth_clean_arch/core/errors/failures.dart';
+import 'package:auth_clean_arch/core/result/result.dart';
 import 'package:auth_clean_arch/core/usecases/usecase.dart';
-import 'package:auth_clean_arch/features/registration/domain/entities/user.dart';
 import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
-import 'package:dartz/dartz.dart';
+import 'package:equatable/equatable.dart';
 
-class DeleteAccountUsecase extends UseCase<User, NoParams> {
+class DeleteAccountUsecase extends UseCase<void, UserDeleteParams> {
   UserRepository repository;
 
   DeleteAccountUsecase(this.repository);
 
   @override
-  Future<Either<Failure, User>> call(NoParams params) async {
-    var currentUserIdCall = await repository.getCurrentUserId();
-    return currentUserIdCall.fold((failure) => Left(failure),
-        (currentUserId) async {
-      return repository.deleteUser(currentUserId);
-    });
+  Future<Result<void>> call(UserDeleteParams params) {
+    return repository.logout();
   }
+
+}
+
+class UserDeleteParams extends Equatable{
+  final int id;
+
+  const UserDeleteParams(this.id);
+
+  @override
+  List<Object?> get props => [id];
 }

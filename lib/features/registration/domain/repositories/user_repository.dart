@@ -1,23 +1,24 @@
-import '../../../../core/errors/failures.dart';
+import 'package:auth_clean_arch/core/result/result.dart';
+
 import '../entities/user.dart';
-import 'package:dartz/dartz.dart';
 
-import '../use_cases/sign_up_use_case.dart';
 
-abstract class UserRepository{
+abstract class UserRepository {
   //GET methods
-  Future<Either<Failure,User>> getUserByEmail(String email);
-  Future<Either<Failure,User>> getUserById(int id);
-  Future<Either<Failure,UserLoginCredentials>> getUserAuthCredentials(String email);
-  Future<Either<Failure, int>> getCurrentUserId();
-  //POST methods
-  Future<Either<Failure,User>> createUser(UserCreateParams newUser);
-  //UPDATE methods
-  Future<Either<Failure,String>> changePassword(String email, String newPassword);
-  Future<Either<Failure,User>> updateUser(User updatedUser);
-  /// 0 means no Current user. otherwise it is the current user id.
-  /// For sign out please call with 0.
-  Future<Either<Failure, int>> cacheCurrentUser(int id);
-  // DELETE methods
-  Future<Either<Failure,User>> deleteUser(int userId);
+  Future<Result<User>> getUser(int userId);
+
+  // POST methods
+  Future<Result<User>> createUser(
+      String email, String password, String firstName, String lastName);
+
+  Future<Result<User>> login(String email, String password);
+  Future<Result<void>> logout();
+
+  // UPDATE methods
+  Future<Result<bool>> changePassword(int userId, String newPassword);
+
+  Future<Result<User>> updateUser(int userId, User updatedUser);
+
+  // Delete methods
+  Future<Result<User>> deleteUser(int userId);
 }
