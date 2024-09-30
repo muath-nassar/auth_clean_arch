@@ -1,11 +1,18 @@
 
+import 'package:hive/hive.dart';
+
 import '../../domain/entities/user.dart';
 
-class UserModel extends User {
-  const UserModel({
+@HiveType(typeId: 0)
+class UserModel extends User with HiveObjectMixin{
+  UserModel({
+    @HiveField(0)
     required super.id,
+    @HiveField(1)
     required super.email,
+    @HiveField(2)
     required super.firstName,
+    @HiveField(3)
     required super.lastName,
   });
 

@@ -1,34 +1,36 @@
 
 
+import 'package:hive/hive.dart';
+
 import '../models/user_model.dart';
 
 abstract class LocalUserDatasource{
-  Future<void> cache(UserModel userModel);
+  Future<void> cacheCurrentUser(UserModel userModel);
 
-  Future<UserModel> getLastCachedUser();
+  Future<UserModel?> getLastCachedUser();
 
-  Future<void> removeLastCachedUser();
+  Future<void> deleteCurrentUser();
 }
 
+String currentUserKey = 'currentUser';
 class LocalUserDatasourceImpl extends LocalUserDatasource{
+  final Box<UserModel> userBox;
+
+  LocalUserDatasourceImpl(this.userBox);
+
   @override
-  Future<void> cache(UserModel userModel) {
-    // TODO: implement cache
-    throw UnimplementedError();
+  Future<void> cacheCurrentUser(UserModel user) async {
+    await userBox.put(currentUserKey, user);
   }
 
   @override
-  Future<UserModel> getLastCachedUser() {
-    // TODO: implement getLastCachedUser
-    throw UnimplementedError();
+  Future<UserModel?> getLastCachedUser() async {
+    return userBox.get(currentUserKey);
   }
 
   @override
-  Future<void> removeLastCachedUser() {
-    // TODO: implement removeLastCachedUser
-    throw UnimplementedError();
+  Future<void> deleteCurrentUser() async {
+    await userBox.delete(currentUserKey);
   }
-
-
 
 }
