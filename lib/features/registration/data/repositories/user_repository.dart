@@ -1,11 +1,16 @@
 
-import 'package:auth_clean_arch/core/result/result.dart';
 
-import 'package:auth_clean_arch/features/registration/domain/entities/user.dart';
-
+import '../../../../core/result/result.dart';
+import '../../domain/entities/user.dart';
 import '../../domain/repositories/user_repository.dart';
+import '../datasources/local_user_datasource.dart';
+import '../datasources/remote_user_datasource.dart';
 
 class UserRepositoryImp extends UserRepository {
+  LocalUserDatasource localUserDatasource;
+  RemoteUserDataSource remoteUserDataSource;
+
+  UserRepositoryImp({required this.remoteUserDataSource, required this.localUserDatasource});
   @override
   Future<Result<bool>> changePassword(int userId, String newPassword) {
     // TODO: implement changePassword
@@ -45,6 +50,12 @@ class UserRepositoryImp extends UserRepository {
   @override
   Future<Result<User>> updateUser(int userId, User updatedUser) {
     // TODO: implement updateUser
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<Result<User>> getCurrentUser() {
+    // TODO: implement getCurrentUser
     throw UnimplementedError();
   }
 

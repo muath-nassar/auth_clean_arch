@@ -9,7 +9,7 @@ import '../repositories/user_repository.dart';
 class LoginUseCase extends UseCase<User, LoginParams> {
   final UserRepository repository;
 
-  LoginUseCase({required this.repository});
+  LoginUseCase(this.repository);
 
   @override
   Future<Result<User>> call(LoginParams params) {

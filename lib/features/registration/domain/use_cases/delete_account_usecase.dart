@@ -3,16 +3,17 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/result/result.dart';
 import '../../../../core/usecases/usecase.dart';
+import '../entities/user.dart';
 import '../repositories/user_repository.dart';
 
-class DeleteAccountUsecase extends UseCase<void, UserDeleteParams> {
+class DeleteAccountUsecase extends UseCase<User, UserDeleteParams> {
   UserRepository repository;
 
   DeleteAccountUsecase(this.repository);
 
   @override
-  Future<Result<void>> call(UserDeleteParams params) {
-    return repository.logout();
+  Future<Result<User>> call(UserDeleteParams params) {
+    return repository.deleteUser(params.id);
   }
 
 }

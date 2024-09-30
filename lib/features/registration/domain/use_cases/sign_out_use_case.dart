@@ -11,7 +11,4 @@ class SignOutUseCase extends UseCase<void, NoParams>{
   Future<Result<void>> call(NoParams params) {
     return repository.logout();
   }
-
-
-
 }

@@ -48,6 +48,7 @@ dependencies:
   # For remote
   http: ^1.2.2
   hive: ^2.2.3
+  internet_connection_checker: ^1.0.0+1
 
 
 dev_dependencies:

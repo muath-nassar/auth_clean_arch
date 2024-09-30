@@ -16,7 +16,6 @@ class SignUpUseCase extends UseCase<User,UserCreateParams>{
   }
 }
 
-/// UserCreateDTO class is used to get the data needed to create a new user.
 class UserCreateParams extends  Equatable{
   final String email;
   final String firstName;
