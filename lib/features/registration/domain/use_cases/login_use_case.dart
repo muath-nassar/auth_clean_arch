@@ -1,9 +1,9 @@
-import 'package:auth_clean_arch/core/result/result.dart';
-import 'package:auth_clean_arch/core/usecases/usecase.dart';
-import 'package:auth_clean_arch/features/registration/domain/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/result/result.dart';
+import '../../../../core/usecases/usecase.dart';
 import '../entities/user.dart';
+import '../repositories/user_repository.dart';
 
 
 class LoginUseCase extends UseCase<User, LoginParams> {

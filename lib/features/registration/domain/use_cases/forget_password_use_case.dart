@@ -1,5 +1,5 @@
-import 'package:auth_clean_arch/core/result/result.dart';
 import 'package:equatable/equatable.dart';
+import '../../../../core/result/result.dart';
 import '../../../../core/usecases/usecase.dart';
 
 
