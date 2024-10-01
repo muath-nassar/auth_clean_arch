@@ -12,24 +12,24 @@ import '../models/user_model.dart';
 abstract class RemoteUserDataSource {
 
   /// Throws [NetworkException] if Offline
-  Future<User> getUser(int userId);
+  Future<UserModel> getUser(int userId);
 
   /// Throws [NetworkException] if Offline
-  Future<User> login(String email, String password);
+  Future<UserModel> login(String email, String password);
 
   /// Throws [NetworkException] if Offline
-  Future<User> updateUser(int userId, User updatedUser);
+  Future<UserModel> updateUser(int userId, User updatedUser);
 
   /// Throws [NetworkException] if Offline
   Future<bool> changePassword(int userId, String newPassword);
 
   /// Throws [UserCreateException] if the user can't be created
   /// Throws [NetworkException] if Offline
-  Future<User> createUser(
+  Future<UserModel> createUser(
       String email, String password, String firstName, String lastName);
 
   /// Throws [NetworkException] if Offline
-  Future<User> deleteUser(int id);
+  Future<UserModel> deleteUser(int id);
 }
 
 Map<String, String> headers = {'Content-Type': 'application/json'};
@@ -49,7 +49,7 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
   /// Throws [UserCreateException] if the user can't be created
   /// Throws [NetworkException] if Offline
   @override
-  Future<User> createUser(String email, String password, String firstName, String lastName) async {
+  Future<UserModel> createUser(String email, String password, String firstName, String lastName) async {
     await _networkExceptionHandling();
     Uri url = Uri.parse("${baseUrl}users/signup");
     Map<String, dynamic> body = {
@@ -76,7 +76,7 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
   }
 
   @override
-  Future<User> login(String email, String password) async {
+  Future<UserModel> login(String email, String password) async {
     await _networkExceptionHandling();
     Uri url = Uri.parse("${baseUrl}users/login");
     Map<String, dynamic> body = {
@@ -91,6 +91,8 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
 
     if (response.statusCode == 200) {
       return UserModel.fromJson(json.decode(response.body));
+    }else if(response.statusCode == 401){
+      throw LoginException();
     }
     throw ServerException();
   }
@@ -119,7 +121,7 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
   }
 
   @override
-  Future<User> deleteUser(int id) async {
+  Future<UserModel> deleteUser(int id) async {
     await _networkExceptionHandling();
     Uri url = Uri.parse("${baseUrl}users/$id/delete");
     Map<String, dynamic> body = {
@@ -137,7 +139,7 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
   }
 
   @override
-  Future<User> getUser(int userId) async {
+  Future<UserModel> getUser(int userId) async {
     await _networkExceptionHandling();
     Uri url = Uri.parse("${baseUrl}users/$userId");
 
@@ -153,7 +155,7 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
   }
 
   @override
-  Future<User> updateUser(int userId, User updatedUser) async {
+  Future<UserModel> updateUser(int userId, User updatedUser) async {
     await _networkExceptionHandling();
     Uri url = Uri.parse("${baseUrl}users/$userId/update");
     Map<String, dynamic> body = {

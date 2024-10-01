@@ -11,11 +11,11 @@ class Result<T> extends Equatable{
   const Result._({this.data, this.failure});
 
   factory Result.success(T data){
-    return Result._(data: data);
+    return Result<T>._(data: data);
   }
 
   factory Result.failure(Failure failure){
-    return Result._(failure: failure);
+    return Result<T>._(failure: failure);
   }
 
 bool isSuccess() => data != null;

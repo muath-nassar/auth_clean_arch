@@ -11,39 +11,30 @@ class UserCreateFailure extends Failure{
   const UserCreateFailure(super.errors);
 }
 
-class UserNotFoundFailure extends Failure{
-  const UserNotFoundFailure(super.errors);
-}
-
 class WrongCredentialsFailure extends Failure{
   const WrongCredentialsFailure(super.errors);
 }
 
-class EmailNotVerifiedFailure extends Failure{
-  const EmailNotVerifiedFailure(super.errors);
-}
-
-class CacheFailure extends Failure {
-  const CacheFailure(super.errors);
-}
-
-class DatabaseReadFailure extends Failure{
-  const DatabaseReadFailure(super.errors);
-}
-class DatabaseWriteFailure extends Failure{
-  const DatabaseWriteFailure(super.errors);
-}
-
-class EmailFailure extends Failure{
-  const EmailFailure(super.errors);
-}
-
-class VerificationCodeFailure extends Failure{
-  const VerificationCodeFailure(super.errors);
-}
 
 class InvalidInputFailure extends Failure{
   const InvalidInputFailure(super.errors);
+}
+
+class NetworkFailure extends Failure{
+  const NetworkFailure(super.errors);
+}
+
+class FormatFailure extends Failure{
+  const FormatFailure(super.errors);
+}
+
+
+class ServerFailure extends Failure{
+  const ServerFailure(super.errors);
+}
+
+class NoCachedUserFailure extends Failure{
+  const NoCachedUserFailure(super.errors);
 
 }
 

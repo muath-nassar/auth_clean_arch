@@ -6,11 +6,11 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../../../fixtures/fixture_reader.dart';
 
 main() {
-  UserModel testUser = const UserModel(
+  UserModel testUser = UserModel(
       id: 1,
       email: 'test@test.com',
-      firstName: 'firstName',
-      lastName: 'lastName');
+      firstName: 'John',
+      lastName: 'Doe');
   group('fromJson', () {
     test('should return a valid model', () async {
       // arrange
@@ -33,8 +33,8 @@ main() {
       expect(result, {
         "id": 1,
         "email": "test@test.com",
-        "firstName": "firstName",
-        "lastName": "lastName"
+        "firstName": "John",
+        "lastName": "Doe"
       });
     });
   });
