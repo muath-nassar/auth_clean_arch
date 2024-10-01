@@ -12,7 +12,7 @@ import 'signup_usecase_test.mocks.dart';
 main() {
   late MockUserRepository mockUserRepository;
   late SignUpUseCase signUpUseCase;
-  User createdUser = const User(id: 1,
+  User createdUser = User(id: 1,
       email: 'test@test.com',
       firstName: 'firstName',
       lastName: 'lastName');

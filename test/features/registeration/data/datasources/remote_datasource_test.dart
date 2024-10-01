@@ -426,7 +426,7 @@ void main() {
       'firstName': firstName,
       'lastName': lastName,
     };
-    User updatedUser = const User(id: id, email: email, firstName: firstName, lastName: lastName);
+    User updatedUser =  User(id: id, email: email, firstName: firstName, lastName: lastName);
     test('should perform a PUT request with correct URL, headers, and body', () async {
       // Arrange
       when(mockNetworkInfo.isConnected).thenAnswer((_)async=>true);

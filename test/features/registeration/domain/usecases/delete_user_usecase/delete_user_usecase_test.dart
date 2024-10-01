@@ -14,7 +14,7 @@ import 'delete_user_usecase_test.mocks.dart';
 main(){
   late MockUserRepository mockUserRepository;
   late DeleteAccountUsecase usecase;
-  User testUser = const User(
+  User testUser = User(
       id: 1,
       email: 'test@test.com',
       firstName: 'firstName',

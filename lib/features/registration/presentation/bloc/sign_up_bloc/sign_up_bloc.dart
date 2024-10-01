@@ -23,7 +23,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
   }) : super(SignUpInitial()) {
     on<SignUpEvent>((event, emit) async {
       if (event is SignUpRequest) {
-        _handleSignUpRequest(event, emit);
+        await _handleSignUpRequest(event, emit);
       }
     });
   }

@@ -60,6 +60,23 @@ class MockUserRepository extends _i1.Mock implements _i3.UserRepository {
       ) as _i4.Future<_i2.Result<_i5.User>>);
 
   @override
+  _i4.Future<_i2.Result<_i5.User>> getUserByEmail(String? email) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUserByEmail,
+          [email],
+        ),
+        returnValue:
+            _i4.Future<_i2.Result<_i5.User>>.value(_FakeResult_0<_i5.User>(
+          this,
+          Invocation.method(
+            #getUserByEmail,
+            [email],
+          ),
+        )),
+      ) as _i4.Future<_i2.Result<_i5.User>>);
+
+  @override
   _i4.Future<_i2.Result<_i5.User>> getCurrentUser() => (super.noSuchMethod(
         Invocation.method(
           #getCurrentUser,

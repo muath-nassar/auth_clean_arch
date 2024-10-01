@@ -63,6 +63,22 @@ class MockRemoteUserDataSource extends _i1.Mock
       ) as _i4.Future<_i2.UserModel>);
 
   @override
+  _i4.Future<_i2.UserModel> getUserByEmail(String? email) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #getUserByEmail,
+          [email],
+        ),
+        returnValue: _i4.Future<_i2.UserModel>.value(_FakeUserModel_0(
+          this,
+          Invocation.method(
+            #getUserByEmail,
+            [email],
+          ),
+        )),
+      ) as _i4.Future<_i2.UserModel>);
+
+  @override
   _i4.Future<_i2.UserModel> login(
     String? email,
     String? password,

@@ -38,4 +38,11 @@ class NoCachedUserFailure extends Failure{
 
 }
 
+class UserNotFoundFailure extends Failure{
+  const UserNotFoundFailure(super.errors);
+
+}
+
+
+
 

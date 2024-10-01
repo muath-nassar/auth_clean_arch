@@ -3,18 +3,28 @@ import 'package:hive/hive.dart';
 
 import '../../domain/entities/user.dart';
 
+part 'user_model.g.dart';
+
 @HiveType(typeId: 0)
-class UserModel extends User with HiveObjectMixin{
+class UserModel extends User with HiveObjectMixin {
+  @HiveField(0)
+  final int? id;
+
+  @HiveField(1)
+  final String? email;
+
+  @HiveField(2)
+  final String? firstName;
+
+  @HiveField(3)
+  final String? lastName;
+
   UserModel({
-    @HiveField(0)
-    required super.id,
-    @HiveField(1)
-    required super.email,
-    @HiveField(2)
-    required super.firstName,
-    @HiveField(3)
-    required super.lastName,
-  });
+    this.id,
+    this.email,
+    this.firstName,
+    this.lastName,
+  }) : super(id: id, email: email, firstName: firstName, lastName: lastName);
 
   factory UserModel.fromJson(Map<String, dynamic> userJson){
     // Check if all required fields are present

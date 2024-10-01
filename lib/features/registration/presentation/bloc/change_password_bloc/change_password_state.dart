@@ -18,7 +18,7 @@ final class InvalidEmailState extends ChangePasswordState{
   List<Object?> get props => [failure];
 }
 
-final class SearchEmailStat extends ChangePasswordState{
+final class SearchEmailState extends ChangePasswordState{
   @override
   List<Object?> get props =>  [];
 }
@@ -32,6 +32,9 @@ final class UserFoundState extends ChangePasswordState{
 }
 
 final class UserNotFoundState extends ChangePasswordState{
+  final Failure failure;
+
+  const UserNotFoundState(this.failure);
   @override
   List<Object?> get props =>  [];
 }

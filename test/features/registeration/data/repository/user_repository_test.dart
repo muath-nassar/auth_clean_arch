@@ -151,7 +151,7 @@ void main() {
           .thenAnswer((_) async => testUser); // Adjust this if returning void
 
       // Act
-      final result = await repository.deleteUser(testUser.id);
+      final result = await repository.deleteUser(testUser.id!);
 
       // Assert
       expect(result, Result<User>.success(testUser)); // Adjust if returning User
@@ -164,7 +164,7 @@ void main() {
           .thenThrow(NetworkException());
 
       // Act
-      final result = await repository.deleteUser(testUser.id);
+      final result = await repository.deleteUser(testUser.id!);
 
       // Assert
       expect(result, Result<User>.failure(const NetworkFailure(['Internet connection is down'])));
@@ -177,7 +177,7 @@ void main() {
           .thenThrow(ServerException());
 
       // Act
-      final result = await repository.deleteUser(testUser.id);
+      final result = await repository.deleteUser(testUser.id!);
 
       // Assert
       expect(result, Result<User>.failure(ServerFailure(['can\'t delete the user ${testUser.id}'])));

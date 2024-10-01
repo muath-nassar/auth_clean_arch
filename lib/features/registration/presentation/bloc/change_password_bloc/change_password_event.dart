@@ -6,7 +6,7 @@ sealed class ChangePasswordEvent extends Equatable {
 
 final class ChangePasswordRequest extends ChangePasswordEvent{
   final String newPassword;
-  final String id;
+  final int id;
 
   const ChangePasswordRequest(this.id, this.newPassword);
 

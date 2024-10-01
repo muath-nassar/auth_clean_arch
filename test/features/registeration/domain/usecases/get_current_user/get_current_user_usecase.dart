@@ -13,7 +13,7 @@ import 'get_current_user_usecase.mocks.dart';
 main() {
   late MockUserRepository mockUserRepository;
   late GetCurrentUserUsecase usecase;
-  User testUser = const User(id: 1,
+  User testUser = User(id: 1,
       email: 'test@test.com',
       firstName: 'firstName',
       lastName: 'lastName');

@@ -44,20 +44,20 @@ class ChangePasswordBloc extends Bloc<ChangePasswordEvent, ChangePasswordState> 
     }
 
     //Searching
-    emit(SearchEmailStat());
+    emit(SearchEmailState());
     var action = await getUserUsingEmailUsecase(EmailParams(event.email));
     if(action.isSuccess()){
       userId = action.data!.id;
       emit(UserFoundState(userId!));
     }else{
-      emit(UserNotFoundState());
+      emit(UserNotFoundState(UserNotFoundFailure(['no account for ${event.email}'])));
     }
 
   }
 
   Future<void> _onChangePassword(ChangePasswordRequest event, Emitter<ChangePasswordState> emit) async {
     if(userId == null){
-      emit(UserNotFoundState());
+      emit(const UserNotFoundState(UserNotFoundFailure(['Please add a valid email!'])));
       return;
     }
     // email validation

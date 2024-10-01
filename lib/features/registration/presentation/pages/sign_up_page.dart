@@ -4,6 +4,7 @@ import 'package:auth_clean_arch/features/registration/presentation/pages/sign_in
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../di.dart';
 import '../bloc/sign_up_bloc/sign_up_bloc.dart';
 import '../widgets/email_text_field.dart';
 import '../widgets/password_text_field.dart';
@@ -24,7 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void initState() {
-    // _signUpBloc = getIt<SignUpBloc>();
+    _signUpBloc = getIt<SignUpBloc>();
     super.initState();
   }
   @override
