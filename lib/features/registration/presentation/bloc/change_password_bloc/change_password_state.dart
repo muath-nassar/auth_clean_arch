@@ -17,23 +17,27 @@ final class InvalidEmailState extends ChangePasswordState{
   @override
   List<Object?> get props => [failure];
 }
-final class SendingState extends ChangePasswordState{
-  @override
-  List<Object?> get props => [];
-}
-final class SendErrorState extends ChangePasswordState{
-  final Failure failure;
 
-  const SendErrorState(this.failure);
-
+final class SearchEmailStat extends ChangePasswordState{
   @override
-  List<Object?> get props => [failure];
+  List<Object?> get props =>  [];
 }
 
-final class SendSuccessState extends ChangePasswordState{
+final class UserFoundState extends ChangePasswordState{
+  final int id;
+
+  const UserFoundState(this.id);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props =>  [id];
 }
+
+final class UserNotFoundState extends ChangePasswordState{
+  @override
+  List<Object?> get props =>  [];
+}
+
+
+
 
 final class InvalidPasswordState extends ChangePasswordState{
   final Failure failure;
@@ -42,6 +46,13 @@ final class InvalidPasswordState extends ChangePasswordState{
   @override
   List<Object?> get props => [failure];
 }
+
+
+final class ChangingPasswordState extends ChangePasswordState{
+  @override
+  List<Object?> get props => [];
+}
+
 
 final class ChangePasswordErrorState extends ChangePasswordState{
   final Failure failure;
@@ -52,11 +63,9 @@ final class ChangePasswordErrorState extends ChangePasswordState{
 }
 
 final class ChangePasswordSuccessState extends ChangePasswordState{
-  final String newHashedPassword;
 
-  const ChangePasswordSuccessState(this.newHashedPassword);
   @override
-  List<Object?> get props => [newHashedPassword];
+  List<Object?> get props => [];
 }
 
 

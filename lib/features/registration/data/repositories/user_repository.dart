@@ -114,4 +114,18 @@ class UserRepositoryImp extends UserRepository {
     }
     return Result<User>.failure(const NoCachedUserFailure([]));
   }
+
+  @override
+  Future<Result<User>> getUserByEmail(String email) async{
+    try {
+      User user = await remoteUserDataSource.getUserByEmail(email);
+      return Result.success(user);
+    } on NetworkException catch (_) {
+      return Result.failure(const NetworkFailure(['Internet connection is down']));
+    }on FormatException catch(_){
+      return Result<User>.failure(const FormatFailure(['Invalid user json']));
+    }on ServerException catch (_) {
+      return Result.failure(ServerFailure(['Unable to retrieve user with email: $email']));
+    }
+  }
 }

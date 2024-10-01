@@ -1,8 +1,6 @@
 import 'package:auth_clean_arch/core/common.dart';
-import 'package:auth_clean_arch/di.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/forget_password_page.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/sign_in_page.dart';
-import 'package:auth_clean_arch/features/registration/presentation/pages/verify_email_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -103,9 +101,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     return failureMessagesColumn(state.failure);
                   }
                   if (state is Success) {
-                    WidgetsBinding.instance.addPostFrameCallback((_) {
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>const VerifyEmailPage()));
-                    });
+
                     return const Text('User created successfully');
                   }
                   if (state is Loading) {

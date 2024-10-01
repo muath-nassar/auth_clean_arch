@@ -15,6 +15,9 @@ abstract class RemoteUserDataSource {
   Future<UserModel> getUser(int userId);
 
   /// Throws [NetworkException] if Offline
+  Future<UserModel> getUserByEmail(String email);
+
+  /// Throws [NetworkException] if Offline
   Future<UserModel> login(String email, String password);
 
   /// Throws [NetworkException] if Offline
@@ -167,6 +170,22 @@ class RemoteUserDatasourceImp extends RemoteUserDataSource {
       url,
       headers: headers,
       body: jsonEncode(body),
+    );
+
+    if (response.statusCode == 200) {
+      return UserModel.fromJson(json.decode(response.body));
+    }
+    throw ServerException();
+  }
+
+  @override
+  Future<UserModel> getUserByEmail(String email) async {
+    await _networkExceptionHandling();
+    Uri url = Uri.parse("${baseUrl}users/search?email=$email");
+
+    var response = await httpClient.get(
+      url,
+      headers: headers,
     );
 
     if (response.statusCode == 200) {

@@ -6,6 +6,7 @@ import '../entities/user.dart';
 abstract class UserRepository {
   //GET methods
   Future<Result<User>> getUser(int userId);
+  Future<Result<User>> getUserByEmail(String email);
   Future<Result<User>> getCurrentUser();
 
   // POST methods

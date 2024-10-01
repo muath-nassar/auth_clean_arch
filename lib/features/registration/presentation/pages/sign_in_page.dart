@@ -3,7 +3,6 @@ import 'package:auth_clean_arch/di.dart';
 import 'package:auth_clean_arch/features/registration/presentation/bloc/sign_in_bloc/sign_in_bloc.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/home.dart';
 import 'package:auth_clean_arch/features/registration/presentation/pages/sign_up_page.dart';
-import 'package:auth_clean_arch/features/registration/presentation/pages/verify_email_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -111,10 +110,7 @@ class _SignInPageState extends State<SignInPage> {
                 const SizedBox(height: 16),
                 TextButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const VerifyEmailPage()));
+
                   },
                   child: const Text('Verify your email'),
                 ),

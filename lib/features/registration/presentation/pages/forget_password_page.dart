@@ -89,45 +89,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 const SizedBox(height: 24),
 
-            BlocBuilder<ChangePasswordBloc, ChangePasswordState>(
-              builder: (context, state) {
-                if (state is Loading) {
-                  return const Center(
-                    child: CircularProgressIndicator.adaptive(),
-                  );
-                }
-                if (state is ChangePasswordSuccessState) {
-                  return const Text('Password changed successfully!');
-                }
-                if (state is ChangePasswordErrorState) {
-                  return failureMessagesColumn(state.failure);
-                }
-                if (state is InvalidEmailState) {
-                  return failureMessagesColumn(state.failure);
-                }
-                if (state is InvalidPasswordState) {
-                  return failureMessagesColumn(state.failure);
-                }
-                if (state is SendErrorState) {
-                  return failureMessagesColumn(state.failure);
-                }
-                if (state is SendSuccessState) {
-                  return const Text('Password reset email sent successfully!');
-                }
-                // Initial or default state
-                return Container();
-              },
-            )
-
-
-            ,
                 const SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
-                    // Trigger the event to send the verification code
-                    _changePasswordBloc.add(SendEmail(
-                      _emailController.text.trim(),
-                    ));
+
                   },
                   child: const Text('Send Code'),
                 ),

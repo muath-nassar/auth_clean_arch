@@ -16,7 +16,6 @@ class ForgetPasswordUseCase extends UseCase<bool, ForgetPasswordParams> {
 }
 
 class ForgetPasswordParams extends Equatable{
-
   final int id;
   final String password;
 
