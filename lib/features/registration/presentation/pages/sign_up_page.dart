@@ -40,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
       body: Center(
         child: Container(
           padding: const EdgeInsets.all(24.0),
-          height: MediaQuery.sizeOf(context).height / 1.1,
+          // height: MediaQuery.sizeOf(context).height / 1.1,
           width: MediaQuery.sizeOf(context).width / 1.2,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -127,7 +127,6 @@ class _SignUpPageState extends State<SignUpPage> {
                 },
                 child: const Text('Forgot Password?'),
               ),
-              const Spacer(),
               TextButton(
                 onPressed: () {
                   Navigator.pushAndRemoveUntil(

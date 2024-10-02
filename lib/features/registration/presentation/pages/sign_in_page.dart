@@ -41,7 +41,7 @@ class _SignInPageState extends State<SignInPage> {
         body: Center(
           child: Container(
             padding: const EdgeInsets.all(24.0),
-            height: MediaQuery.sizeOf(context).height / 1.5,
+            // height: MediaQuery.sizeOf(context).height / 2,
             width: MediaQuery.sizeOf(context).width / 1.2,
             decoration: BoxDecoration(
               color: Colors.white,

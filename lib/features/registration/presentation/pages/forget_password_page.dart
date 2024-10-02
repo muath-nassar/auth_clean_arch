@@ -3,9 +3,7 @@ import 'package:auth_clean_arch/di.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/errors/failures.dart';
-import '../../domain/entities/user.dart';
 import '../bloc/change_password_bloc/change_password_bloc.dart';
-import '../bloc/sign_in_bloc/sign_in_bloc.dart'; // Import your ChangePasswordBloc
 
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
@@ -36,7 +34,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         body: Center(
           child: Container(
             padding: const EdgeInsets.all(24.0),
-            height: MediaQuery.sizeOf(context).height / 1.5,
+            // height: MediaQuery.sizeOf(context).height / 2,
             width: MediaQuery.sizeOf(context).width / 1.2,
             decoration: BoxDecoration(
               color: Colors.white,
