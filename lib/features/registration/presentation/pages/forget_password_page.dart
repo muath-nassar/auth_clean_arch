@@ -1,5 +1,6 @@
 import 'package:auth_clean_arch/core/common.dart';
 import 'package:auth_clean_arch/di.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../core/errors/failures.dart';
@@ -13,6 +14,8 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
   late final ChangePasswordBloc _changePasswordBloc;
   int? foundUserId;
 
@@ -62,77 +65,80 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 const SizedBox(height: 24),
                 BlocBuilder<ChangePasswordBloc, ChangePasswordState>(
                   builder: (context, state) {
-                    if(state is ChangePasswordInitial){
+                    if (state is ChangePasswordInitial) {
                       return EmailToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
                         failure: null,
+                        emailController: _emailController,
                       );
                     }
-                    if(state is SearchEmailState){
+                    if (state is SearchEmailState) {
                       return EmailToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: true,
                         failure: null,
+                        emailController: _emailController,
                       );
                     }
-                    if(state is InvalidEmailState){
+                    if (state is InvalidEmailState) {
                       return EmailToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
                         failure: state.failure,
+                        emailController: _emailController,
                       );
                     }
-                    if(state is UserNotFoundState){
+                    if (state is UserNotFoundState) {
                       return EmailToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
-                        failure: state.failure,
+                        failure: state.failure, emailController: _emailController,
                       );
                     }
                     //-----------------
-                    if(state is UserFoundState){
+                    if (state is UserFoundState) {
                       foundUserId = state.id;
                       return PasswordToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
                         failure: null,
-                        userId: foundUserId!,
+                        userId: foundUserId!, passwordController: _passwordController,
                       );
                     }
-                    if(state is ChangingPasswordState){
+                    if (state is ChangingPasswordState) {
                       return PasswordToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: true,
                         failure: null,
-                        userId: foundUserId!,
+                        userId: foundUserId!, passwordController: _passwordController,
                       );
                     }
-                    if(state is InvalidPasswordState){
+                    if (state is InvalidPasswordState) {
                       return PasswordToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
                         failure: state.failure,
                         userId: foundUserId!,
+                        passwordController: _passwordController,
                       );
                     }
-                    if(state is ChangePasswordErrorState){
+                    if (state is ChangePasswordErrorState) {
                       return PasswordToChangePassword(
                         changePasswordBloc: _changePasswordBloc,
                         loading: false,
                         failure: state.failure,
                         userId: foundUserId!,
+                        passwordController: _passwordController,
                       );
                     }
-                    if(state is ChangePasswordSuccessState){
+                    if (state is ChangePasswordSuccessState) {
                       return const Text('Password is changed');
                     }
-
 
                     return Container();
                   },
                 ),
-
               ],
             ),
           ),
@@ -143,15 +149,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 }
 
 class EmailToChangePassword extends StatelessWidget {
-  EmailToChangePassword({
+  const EmailToChangePassword({
     super.key,
-    required ChangePasswordBloc changePasswordBloc,
     required this.loading,
     required this.failure,
-  }) : _changePasswordBloc = changePasswordBloc;
+    required this.emailController,
+    required this.changePasswordBloc,
+  });
 
-  final TextEditingController _emailController = TextEditingController();
-  final ChangePasswordBloc _changePasswordBloc;
+  final TextEditingController emailController;
+  final ChangePasswordBloc changePasswordBloc;
   final bool loading;
   final Failure? failure;
 
@@ -160,22 +167,21 @@ class EmailToChangePassword extends StatelessWidget {
     return Column(
       children: [
         TextField(
-          controller: _emailController,
+          controller: emailController,
           decoration: const InputDecoration(
             labelText: 'Email',
             border: OutlineInputBorder(),
           ),
         ),
         const SizedBox(height: 12),
-        failure != null ?
-        failureMessagesColumn(failure!) : const SizedBox(),
+        failure != null ? failureMessagesColumn(failure!) : const SizedBox(),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: () {
             // Trigger the event to change the password
-            if(loading) return;
-            _changePasswordBloc
-                .add(SearchEmailRequest(_emailController.text.trim()));
+            if (loading) return;
+            changePasswordBloc
+                .add(SearchEmailRequest(emailController.text.trim()));
           },
           child: SizedBox(
             height: 48.0, // Set the fixed height for the button
@@ -195,19 +201,18 @@ class EmailToChangePassword extends StatelessWidget {
   }
 }
 
-
-
 class PasswordToChangePassword extends StatelessWidget {
-  PasswordToChangePassword({
+  const PasswordToChangePassword({
     super.key,
-    required ChangePasswordBloc changePasswordBloc,
     required this.loading,
     required this.failure,
     required this.userId,
-  }) : _changePasswordBloc = changePasswordBloc;
+    required this.passwordController,
+    required this.changePasswordBloc,
+  });
 
-  final TextEditingController _passwordController = TextEditingController();
-  final ChangePasswordBloc _changePasswordBloc;
+  final TextEditingController passwordController;
+  final ChangePasswordBloc changePasswordBloc;
   final bool loading;
   final Failure? failure;
   final int userId;
@@ -217,7 +222,7 @@ class PasswordToChangePassword extends StatelessWidget {
     return Column(
       children: [
         TextField(
-          controller: _passwordController,
+          controller: passwordController,
           decoration: const InputDecoration(
             labelText: 'Password',
             border: OutlineInputBorder(),
@@ -225,15 +230,14 @@ class PasswordToChangePassword extends StatelessWidget {
           obscureText: true,
         ),
         const SizedBox(height: 12),
-        failure != null ?
-        failureMessagesColumn(failure!) : const SizedBox(),
+        failure != null ? failureMessagesColumn(failure!) : const SizedBox(),
         const SizedBox(height: 12),
         ElevatedButton(
           onPressed: () {
             // Trigger the event to change the password
-            if(loading) return;
-            _changePasswordBloc
-                .add(ChangePasswordRequest(userId,_passwordController.text.trim()));
+            if (loading) return;
+            changePasswordBloc.add(
+                ChangePasswordRequest(userId, passwordController.text.trim()));
           },
           child: SizedBox(
             height: 48.0, // Set the fixed height for the button
@@ -241,10 +245,10 @@ class PasswordToChangePassword extends StatelessWidget {
               child: !loading
                   ? const Text('Change Password')
                   : const SizedBox(
-                height: 12.0,
-                width: 12.0,
-                child: CircularProgressIndicator.adaptive(),
-              ),
+                      height: 12.0,
+                      width: 12.0,
+                      child: CircularProgressIndicator.adaptive(),
+                    ),
             ),
           ),
         ),
